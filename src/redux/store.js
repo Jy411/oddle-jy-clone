@@ -1,7 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
+import authReducer from "./auth";
 
-export default configureStore({
+export const store = configureStore({
   reducer: {
-    // feed: feedReducer
+    auth: authReducer,
   },
 });

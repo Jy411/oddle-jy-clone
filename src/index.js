@@ -8,7 +8,7 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
-import store from "./redux/store";
+import { store } from "./redux/store";
 
 import App from "./App";
 import SearchPage from "./pages/searchPage";

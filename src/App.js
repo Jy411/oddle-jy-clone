@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet, Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { createTokenAuth } from "@octokit/auth-token";
 
 import {
   BottomNavigation,
@@ -9,6 +11,8 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+
+import { setAuth } from "./redux/auth";
 
 const TabNavigation = () => {
   const [value, setValue] = useState(0);
@@ -41,18 +45,41 @@ const TabNavigation = () => {
   );
 };
 
-export default function App() {
+const App = () => {
+  const [token, setToken] = useState(0);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchAuth = async () => {
+      const auth = createTokenAuth("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");
+      return await auth();
+    };
+    fetchAuth().then((token) => {
+      console.log("token", token);
+      setToken(token);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (token) {
+      dispatch(setAuth(token));
+    }
+  }, [dispatch, token]);
+
   return (
     <Container
-      maxWidth="xs"
+      maxWidth="sm"
       sx={{
         display: "flex",
         flexDirection: "column",
         height: "calc(100vh - 70px)",
+        p: 0,
       }}
     >
       <TabNavigation />
       <Outlet />
     </Container>
   );
-}
+};
+
+export default App;
