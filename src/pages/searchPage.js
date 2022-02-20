@@ -13,14 +13,21 @@ import _ from "lodash";
 import UserCard from "../components/UserCard";
 import UserCardGrid from "../components/layout/UserCardGrid";
 import Grid from "@mui/material/Grid";
+import { useSelector } from "react-redux";
+import SearchPagePagination from "../components/SearchPagePagination";
 
 const SearchPage = () => {
   const [queryResponse, setQueryResponse] = useState(null);
+  const authObject = useSelector((state) => state.auth);
 
   const fetchUsers = async (searchQuery) => {
     if (searchQuery) {
       return await request("GET /search/users", {
+        headers: {
+          authorization: `token ${authObject.auth.token}`,
+        },
         q: searchQuery,
+        per_page: 12,
       }).then((res) => {
         setQueryResponse(res);
       });
@@ -31,15 +38,23 @@ const SearchPage = () => {
 
   const debouncedFetchUsers = _.debounce((query) => fetchUsers(query), 1500);
 
-  const onChange = (e) => {
+  const onSearchChange = (e) => {
     debouncedFetchUsers(e.target.value);
   };
 
-  console.log("queryResponse", queryResponse?.data.items);
+  const onPageChange = (event, value) => {
+    console.log(value);
+  };
+
+  const { items, total_count } = queryResponse?.data || {};
+  console.log("queryResponse", queryResponse);
+  // console.log("items", items);
+  // console.log("total_count", total_count);
 
   return (
     <>
-      <SearchHeader onChange={onChange} />
+      <SearchHeader onChange={onSearchChange} />
+
       {!queryResponse && (
         <CenterBox>
           <Box
@@ -72,19 +87,19 @@ const SearchPage = () => {
         </CenterBox>
       )}
       {queryResponse && (
-        <UserCardGrid>
-          {queryResponse.data.items.map((user) => (
-            <Grid item xs={12} sm={6}>
-              <UserCard
-                key={user.id}
-                imgSrc={user.avatar_url}
-                username={user.login}
-                followingCountUrl={user.following_url}
-                followersCountUrl={user.followers_url}
-              />
-            </Grid>
-          ))}
-        </UserCardGrid>
+        <>
+          <Typography variant="subtitle1" sx={{ my: 1 }}>
+            {total_count} GitHub Users found
+          </Typography>
+          <UserCardGrid>
+            {items.map((user) => (
+              <Grid item xs={12} sm={6} key={user.id}>
+                <UserCard imgSrc={user.avatar_url} username={user.login} />
+              </Grid>
+            ))}
+          </UserCardGrid>
+          <SearchPagePagination onChange={onPageChange} />
+        </>
       )}
     </>
   );

@@ -55,7 +55,6 @@ const App = () => {
       return await auth();
     };
     fetchAuth().then((token) => {
-      console.log("token", token);
       setToken(token);
     });
   }, []);
