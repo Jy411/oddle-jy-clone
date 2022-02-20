@@ -44,6 +44,7 @@ const TabNavigation = () => {
 export default function App() {
   return (
     <Container
+      maxWidth="xs"
       sx={{
         display: "flex",
         flexDirection: "column",
