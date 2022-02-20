@@ -7,7 +7,7 @@ We will be really appreciated if you are willing to spend more time to finish al
 
 You will build a simpler version of GitHub [search console](https://github.com/search) website so that users can browse & explore. This website includes following 3 pages
 
-1. Search Page `/`: User can type in **username** and show a list of users
+1. SearchPage Page `/`: User can type in **username** and show a list of users
 2. Liked Page `/liked`: User can keep a list of **liked users** for future reference
 3. User Detail Page `/users/:username`: User can know more about an individual user
 
@@ -49,7 +49,7 @@ Make sure you fully understand the requirements before proceeding
 ### Bonus
 
 1. A default or fallback image will be better.
-2. Search Page will display pagination tab if needed (we will not enforce Liked Page)
+2. SearchPage Page will display pagination tab if needed (we will not enforce Liked Page)
 3. Loading, error, and empty states are properly handled
 
 ---
@@ -97,5 +97,5 @@ To submit, you are going to create a pull request that contains all the code cha
 ## Reference
 
 - [MUI](https://mui.com)
-- GitHub [Search Console](https://github.com/search)
+- GitHub [SearchPage Console](https://github.com/search)
 - GitHub API [docs](https://docs.github.com/en/rest)
