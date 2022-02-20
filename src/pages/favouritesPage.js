@@ -4,7 +4,7 @@ import { Typography } from "@mui/material";
 import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 
 import FavouritesHeader from "../components/FavouritesHeader";
-import CenterBox from "../components/CenterBox";
+import CenterBox from "../components/layout/CenterBox";
 
 const FavouritesPage = () => {
   return (
