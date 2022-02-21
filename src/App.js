@@ -56,6 +56,7 @@ const App = () => {
     };
     fetchAuth().then((token) => {
       setToken(token);
+      localStorage.setItem("token", token.token);
     });
   }, []);
 

@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 
-import { request } from "@octokit/request";
+// import { request } from "@octokit/request";
 
-import { Box, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 
 import SearchHeader from "../components/SearchHeader";
 import CenterBox from "../components/layout/CenterBox";
@@ -16,38 +16,59 @@ import Grid from "@mui/material/Grid";
 import { useSelector } from "react-redux";
 import SearchPagePagination from "../components/SearchPagePagination";
 
+import request from "../api/request";
+
 const SearchPage = () => {
+  const [page, setPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
   const [queryResponse, setQueryResponse] = useState(null);
-  const authObject = useSelector((state) => state.auth);
-
-  const fetchUsers = async (searchQuery) => {
-    if (searchQuery) {
-      return await request("GET /search/users", {
-        headers: {
-          authorization: `token ${authObject.auth.token}`,
-        },
-        q: searchQuery,
-        per_page: 12,
-      }).then((res) => {
-        setQueryResponse(res);
-      });
-    } else {
-      setQueryResponse(null);
-    }
-  };
-
-  const debouncedFetchUsers = _.debounce((query) => fetchUsers(query), 1500);
+  const [loading, setLoading] = useState(false);
 
   const onSearchChange = (e) => {
-    debouncedFetchUsers(e.target.value);
+    setSearchQuery(e.target.value);
+    setPage(1);
   };
 
   const onPageChange = (event, value) => {
-    console.log(value);
+    setPage(value);
   };
 
+  useEffect(() => {
+    if (searchQuery) {
+      const fetchUsers = () => {
+        setLoading(true);
+
+        const fetchingData = async () => {
+          return await request("GET /search/users", {
+            q: searchQuery,
+            page: page,
+          })
+            .then((res) => {
+              setQueryResponse(res);
+              setLoading(false);
+            })
+            .catch((err) => {
+              console.log(err);
+              setLoading(false);
+            });
+        };
+
+        fetchingData();
+      };
+
+      // fetchUsers();
+
+      const debouncedFetchUsers = _.debounce(() => fetchUsers(), 1000);
+
+      debouncedFetchUsers();
+    } else {
+      setQueryResponse(null);
+      setLoading(false);
+    }
+  }, [searchQuery, page]);
+
   const { items, total_count } = queryResponse?.data || {};
-  console.log("queryResponse", queryResponse);
+  // console.log("queryResponse", queryResponse);
   // console.log("items", items);
   // console.log("total_count", total_count);
 
@@ -55,7 +76,7 @@ const SearchPage = () => {
     <>
       <SearchHeader onChange={onSearchChange} />
 
-      {!queryResponse && (
+      {!queryResponse && !loading && (
         <CenterBox>
           <Box
             component="img"
@@ -86,7 +107,14 @@ const SearchPage = () => {
           </Typography>
         </CenterBox>
       )}
-      {queryResponse && (
+
+      {loading && (
+        <CenterBox>
+          <CircularProgress color="success" />
+        </CenterBox>
+      )}
+
+      {queryResponse && !loading && (
         <>
           <Typography variant="subtitle1" sx={{ my: 1 }}>
             {total_count} GitHub Users found
@@ -98,7 +126,11 @@ const SearchPage = () => {
               </Grid>
             ))}
           </UserCardGrid>
-          <SearchPagePagination onChange={onPageChange} />
+          <SearchPagePagination
+            totalPages={total_count / 12}
+            currentPage={page}
+            onChange={onPageChange}
+          />
         </>
       )}
     </>

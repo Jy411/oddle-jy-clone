@@ -2,48 +2,40 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import { Box, Typography } from "@mui/material";
-import { request } from "@octokit/request";
-import { useSelector } from "react-redux";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+
+import request from "../api/request";
 
 const UserCard = ({ imgSrc, username }) => {
   const [followersCount, setFollowersCount] = useState(0);
   const [followingCount, setFollowingCount] = useState(0);
 
-  const authObject = useSelector((state) => state.auth);
-
-  const getFollowersCount = useCallback(
-    async (username) => {
-      await request("GET /users/{username}/followers", {
-        headers: {
-          authorization: `token ${authObject.auth.token}`,
-        },
-        username: username,
-      }).then((res) => {
-        setFollowersCount(res.data.length);
-      });
-    },
-    [authObject.auth.token]
-  );
-
-  const getFollowingCount = useCallback(
-    async (username) => {
-      await request("GET /users/{username}/following", {
-        headers: {
-          authorization: `token ${authObject.auth.token}`,
-        },
-        username: username,
-      }).then((res) => {
-        setFollowingCount(res.data.length);
-      });
-    },
-    [authObject.auth.token]
-  );
-
   useEffect(() => {
+    let isMounted = true;
+    const getFollowersCount = async (username) => {
+      await request("GET /users/{username}/followers", {
+        username: username,
+      }).then((res) => {
+        if (isMounted) {
+          setFollowersCount(res.data.length);
+        }
+      });
+    };
+    const getFollowingCount = async (username) => {
+      await request("GET /users/{username}/following", {
+        username: username,
+      }).then((res) => {
+        if (isMounted) {
+          setFollowingCount(res.data.length);
+        }
+      });
+    };
     getFollowingCount(username);
     getFollowersCount(username);
-  }, [getFollowersCount, getFollowingCount, username]);
+    return () => {
+      isMounted = false;
+    };
+  }, [username]);
 
   return (
     <Card

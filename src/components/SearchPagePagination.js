@@ -1,9 +1,10 @@
 import { Pagination } from "@mui/material";
 
-const SearchPagePagination = ({ totalPages, onChange }) => {
+const SearchPagePagination = ({ currentPage, onChange }) => {
   return (
     <Pagination
-      count={10}
+      count={80}
+      page={currentPage}
       color="primary"
       variant="outlined"
       shape="rounded"
