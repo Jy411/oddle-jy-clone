@@ -2,7 +2,7 @@ import React from "react";
 
 import { Box } from "@mui/material";
 
-const CenterBox = ({ children }) => {
+const CenterBox = ({ children, opacity }) => {
   return (
     <Box
       sx={{
@@ -11,7 +11,7 @@ const CenterBox = ({ children }) => {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        opacity: 0.5,
+        opacity: opacity || 0.5,
       }}
     >
       {children}

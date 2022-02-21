@@ -1,6 +1,5 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import UserCard from "../UserCard";
 
 const UserCardGrid = ({ children }) => {
   return (
