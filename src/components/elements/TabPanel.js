@@ -1,30 +1,19 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import React from 'react';
 
 const TabPanel = (props) => {
-	const { children, value, index, ...other } = props;
+	const { children, index, value, ...other } = props;
 
 	return (
 		<div
-			role='tabpanel'
+			aria-labelledby={`simple-tab-${index}`}
 			hidden={value !== index}
 			id={`simple-tabpanel-${index}`}
-			aria-labelledby={`simple-tab-${index}`}
+			role='tabpanel'
 			{...other}
 		>
 			{value === index && children}
 		</div>
 	);
-};
-
-TabPanel.propTypes = {
-	children: PropTypes.node,
-	index: PropTypes.number.isRequired,
-	value: PropTypes.number.isRequired,
 };
 
 export default TabPanel;

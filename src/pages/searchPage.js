@@ -1,28 +1,29 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import Grid from '@mui/material/Grid';
+import _ from 'lodash';
+
+import SearchIcon from '@mui/icons-material/Search';
 import {
 	Box,
 	CircularProgress,
 	Paper,
+	Grid,
 	Typography,
 	useTheme,
 } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import _ from 'lodash';
 
-import CenterBox from '../components/layout/CenterBox';
-import UserCard from '../components/UserCard';
-import UserCardGrid from '../components/layout/UserCardGrid';
-import SearchPagePagination from '../components/SearchPagePagination';
+import { SearchHeader } from 'components/Headers';
+import CenterBox from 'components/layout/CenterBox';
+import UserCardGrid from 'components/layout/UserCardGrid';
+import SearchPagePagination from 'components/SearchPagePagination';
+import UserCard from 'components/UserCard';
 
-import GitHubLogo from '../images/GitHubMark120.png';
-import GitHubLightLogo from '../images/GitHubMarkLight120.png';
-import GitHubLogoText from '../images/GitHubLogoText.png';
-import GitHubLogoTextWhite from '../images/GitHubLogoTextWhite.png';
+import request from 'api/request';
 
-import request from '../api/request';
-import { SearchHeader, UserDetailHeader } from '../components/Headers';
+import GitHubLogoText from 'images/GitHubLogoText.png';
+import GitHubLogoTextWhite from 'images/GitHubLogoTextWhite.png';
+import GitHubLogo from 'images/GitHubMark120.png';
+import GitHubLightLogo from 'images/GitHubMarkLight120.png';
 
 const SearchPageIntro = () => {
 	const theme = useTheme();
@@ -32,27 +33,27 @@ const SearchPageIntro = () => {
 	return (
 		<CenterBox>
 			<Box
-				component='img'
 				alt='github logo'
+				component='img'
 				src={mode === 'dark' ? GitHubLightLogo : GitHubLogo}
 				sx={{
 					width: 120,
 				}}
 			/>
 			<Box
-				component='img'
 				alt='github text'
+				component='img'
 				src={mode === 'dark' ? GitHubLogoTextWhite : GitHubLogoText}
 				sx={{
 					width: 139,
 				}}
 			/>
 			<Typography
-				variant='subtitle2'
 				sx={{
 					textAlign: 'center',
 					maxWidth: 285,
 				}}
+				variant='subtitle2'
 			>
 				Enter GitHub username and search users matching the input like Google
 				Search, click avatars to view more details, including repositories,
@@ -83,15 +84,16 @@ const SearchPage = () => {
 				setLoading(true);
 
 				const fetchingData = async () => {
-					return await request('GET /search/users', {
+					return request('GET /search/users', {
 						q: searchQuery,
-						page: page,
+						page,
 					})
 						.then((res) => {
 							setQueryResponse(res);
 							setLoading(false);
 						})
 						.catch((err) => {
+							// TODO Error Handling
 							console.log(err);
 							setLoading(false);
 						});
@@ -128,19 +130,19 @@ const SearchPage = () => {
 					elevation={0}
 					sx={{ display: 'flex', flexDirection: 'column', px: 3, py: 2 }}
 				>
-					<Typography variant='subtitle1' sx={{ my: 1 }}>
+					<Typography sx={{ my: 1 }} variant='subtitle1'>
 						{total_count} GitHub Users found
 					</Typography>
 					<UserCardGrid>
 						{items.map((user) => (
-							<Grid item xs={12} sm={6} key={user.id}>
+							<Grid item key={user.id} sm={6} xs={12}>
 								<UserCard user={user} />
 							</Grid>
 						))}
 					</UserCardGrid>
 					<SearchPagePagination
-						totalPages={total_count / 12}
 						currentPage={page}
+						totalPages={total_count / 12}
 						onChange={onPageChange}
 					/>
 				</Paper>

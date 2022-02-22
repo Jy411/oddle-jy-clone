@@ -1,8 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
+
 import authReducer from './auth';
 import userFavouritesReducer from './userFavourites';
 
-export const store = configureStore({
+export default configureStore({
 	reducer: {
 		auth: authReducer,
 		userFavourites: userFavouritesReducer,

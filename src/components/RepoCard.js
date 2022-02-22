@@ -1,9 +1,11 @@
+import React from 'react';
+
 import { Box, Typography } from '@mui/material';
 
 import StyledCard from './elements/StyledCard';
 
 const RepoCard = ({ repoDetails }) => {
-	const { name, forks_count, stargazers_count } = repoDetails;
+	const { forks_count, name, stargazers_count } = repoDetails;
 
 	return (
 		<StyledCard
@@ -17,7 +19,7 @@ const RepoCard = ({ repoDetails }) => {
 				borderRadius: 3,
 			}}
 		>
-			<Typography variant='subtitle1' sx={{ fontWeight: 'bold' }}>
+			<Typography sx={{ fontWeight: 'bold' }} variant='subtitle1'>
 				{name}
 			</Typography>
 			<Box sx={{ display: 'flex', flexDirection: 'column' }}>

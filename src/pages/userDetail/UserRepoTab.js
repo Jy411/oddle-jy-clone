@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
+
+import { Box, CircularProgress } from '@mui/material';
 import Grid from '@mui/material/Grid';
 
-import TabPanel from '../../components/elements/TabPanel';
-import UserCardGrid from '../../components/layout/UserCardGrid';
-import RepoCard from '../../components/RepoCard';
-import { Box, CircularProgress, Paper } from '@mui/material';
+import TabPanel from 'components/elements/TabPanel';
+import UserCardGrid from 'components/layout/UserCardGrid';
+import RepoCard from 'components/RepoCard';
 
-const UserRepoTab = ({ value, reposUrl }) => {
+const UserRepoTab = ({ reposUrl, value }) => {
 	const [loading, setLoading] = useState(false);
 	const [userRepos, setUserRepos] = useState([]);
 
@@ -24,7 +25,7 @@ const UserRepoTab = ({ value, reposUrl }) => {
 	}, [reposUrl]);
 
 	return (
-		<TabPanel value={value} index={0}>
+		<TabPanel index={0} value={value}>
 			{loading ? (
 				<Box sx={{ display: 'flex', justifyContent: 'center' }}>
 					<CircularProgress color='success' />
@@ -32,7 +33,7 @@ const UserRepoTab = ({ value, reposUrl }) => {
 			) : (
 				<UserCardGrid>
 					{userRepos.map((repo) => (
-						<Grid item xs={12} sm={6} key={repo.id}>
+						<Grid item key={repo.id} sm={6} xs={12}>
 							<RepoCard repoDetails={repo} />
 						</Grid>
 					))}

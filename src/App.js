@@ -1,25 +1,26 @@
-import React, { useEffect, useState, useMemo, createContext } from 'react';
-import { Outlet, Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { createTokenAuth } from '@octokit/auth-token';
+import React, { useEffect, useState } from 'react';
 
+import { createTokenAuth } from '@octokit/auth-token';
+import { useDispatch } from 'react-redux';
+import { Outlet, Link } from 'react-router-dom';
+
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import SearchIcon from '@mui/icons-material/Search';
 import {
 	BottomNavigation,
 	BottomNavigationAction,
 	Container,
 	Paper,
 } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 
-import { setAuth } from './redux/auth';
+import { setAuth } from 'redux/auth';
 
 const TabNavigation = () => {
 	const [value, setValue] = useState(0);
 	return (
 		<Paper
-			sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
 			elevation={20}
+			sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
 		>
 			<BottomNavigation
 				showLabels
@@ -29,15 +30,15 @@ const TabNavigation = () => {
 				}}
 			>
 				<BottomNavigationAction
-					label='Search'
-					icon={<SearchIcon />}
 					component={Link}
+					icon={<SearchIcon />}
+					label='Search'
 					to='/search'
 				/>
 				<BottomNavigationAction
-					label='Favourites'
-					icon={<FavoriteIcon />}
 					component={Link}
+					icon={<FavoriteIcon />}
+					label='Favourites'
 					to='/favourites'
 				/>
 			</BottomNavigation>
@@ -52,8 +53,9 @@ const App = () => {
 	useEffect(() => {
 		const fetchAuth = async () => {
 			const auth = createTokenAuth('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');
-			return await auth();
+			return auth();
 		};
+		// eslint-disable-next-line no-shadow
 		fetchAuth().then((token) => {
 			setToken(token);
 			localStorage.setItem('token', token.token);
@@ -68,11 +70,11 @@ const App = () => {
 
 	return (
 		<Container
+			disableGutters
+			square
 			component={Paper}
 			elevation={1}
-			disableGutters
 			maxWidth='md'
-			square
 			sx={{
 				display: 'flex',
 				flexDirection: 'column',

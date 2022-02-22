@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 
 import { Box, Switch, Tooltip, Typography, useTheme } from '@mui/material';
+
 import { ColorModeContext } from '../../index';
 
 const Header = ({ headerLabel, icon }) => {
@@ -21,7 +22,7 @@ const Header = ({ headerLabel, icon }) => {
 				}}
 			>
 				{headerLabel && (
-					<Typography variant='h5' component='div'>
+					<Typography component='div' variant='h5'>
 						<b>{headerLabel}</b>
 					</Typography>
 				)}

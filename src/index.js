@@ -1,23 +1,25 @@
 import React, { createContext, useMemo, useState } from 'react';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import * as ReactDOM from 'react-dom';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+import store from 'redux/store';
+
+import Favourites from 'pages/favouritesPage';
+import SearchPage from 'pages/searchPage';
+import UserDetailPage from 'pages/userDetail/userDetailPage';
+
+import App from './App';
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
-import { store } from './redux/store';
-
-import App from './App';
-import SearchPage from './pages/searchPage';
-import Favourites from './pages/favouritesPage';
-import UserDetailPage from './pages/userDetail/userDetailPage';
-import { Paper } from '@mui/material';
-
+// eslint-disable-next-line import/prefer-default-export
 export const ColorModeContext = createContext({ toggleColorMode: () => {} });
 
 const Root = () => {
@@ -47,11 +49,11 @@ const Root = () => {
 					<BrowserRouter>
 						<Routes>
 							{/* Initial Route to render */}
-							<Route path='/' element={<App />}>
-								<Route path='search' element={<SearchPage />} />
-								<Route path='favourites' element={<Favourites />} />
+							<Route element={<App />} path='/'>
+								<Route element={<SearchPage />} path='search' />
+								<Route element={<Favourites />} path='favourites' />
 							</Route>
-							<Route path='detail' element={<UserDetailPage />} />
+							<Route element={<UserDetailPage />} path='detail' />
 						</Routes>
 					</BrowserRouter>
 				</Provider>

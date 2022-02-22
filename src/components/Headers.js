@@ -1,8 +1,11 @@
-import { useNavigate } from 'react-router-dom';
-import { Box, Paper, TextField } from '@mui/material';
-import Header from './elements/Header';
-import HomeIcon from '@mui/icons-material/Home';
 import React from 'react';
+
+import { useNavigate } from 'react-router-dom';
+
+import HomeIcon from '@mui/icons-material/Home';
+import { Box, Paper, TextField } from '@mui/material';
+
+import Header from './elements/Header';
 
 const HeaderWrapper = ({ children }) => {
 	return (
@@ -22,12 +25,12 @@ const HeaderWrapper = ({ children }) => {
 };
 
 const UserDetailHeader = () => {
-	let navigate = useNavigate();
+	const navigate = useNavigate();
 
 	return (
 		<HeaderWrapper>
 			<Header
-				icon={<HomeIcon onClick={() => navigate('/search')} fontSize='large' />}
+				icon={<HomeIcon fontSize='large' onClick={() => navigate('/search')} />}
 			/>
 		</HeaderWrapper>
 	);
@@ -37,9 +40,9 @@ const Searchbar = ({ onChange }) => {
 	return (
 		<TextField
 			fullWidth
+			id='searchbar'
 			label='Enter GitHub username, i.e. gaearon'
 			placeholder='Enter GitHub username, i.e. gaearon'
-			id='searchbar'
 			onChange={onChange}
 		/>
 	);

@@ -1,22 +1,20 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import Card from '@mui/material/Card';
-import CardMedia from '@mui/material/CardMedia';
-import { Box, Typography } from '@mui/material';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { Box, Typography, CardMedia, LinearProgress } from '@mui/material';
 import { pink } from '@mui/material/colors';
-import LinearProgress from '@mui/material/LinearProgress';
-
-import request from '../api/request';
 
 import {
 	addUserToFavourites,
 	removeUserFromFavourites,
-} from '../redux/userFavourites';
+} from 'redux/userFavourites';
+
+import request from 'api/request';
+
 import StyledCard from './elements/StyledCard';
 
 const UserCard = ({ user }) => {
@@ -26,14 +24,14 @@ const UserCard = ({ user }) => {
 	const [loading, setLoading] = useState(false);
 	const { userFavourites } = useSelector((state) => state.userFavourites);
 	const dispatch = useDispatch();
-	let navigate = useNavigate();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		let isMounted = true;
 		setLoading(true);
 		const getUserDetails = async (username) => {
 			await request('GET /users/{username}', {
-				username: username,
+				username,
 			}).then((res) => {
 				if (isMounted) {
 					setUserDetail(res.data);
@@ -69,10 +67,10 @@ const UserCard = ({ user }) => {
 			) : (
 				<>
 					<CardMedia
-						onClick={() => navigate('/detail', { state: { userDetail } })}
 						component='img'
 						src={user.avatar_url}
 						sx={{ width: 64, height: 64 }}
+						onClick={() => navigate('/detail', { state: { userDetail } })}
 					/>
 					<Box sx={{ display: 'flex', flex: 1, flexDirection: 'column', p: 2 }}>
 						<Box
@@ -82,26 +80,26 @@ const UserCard = ({ user }) => {
 								alignItems: 'center',
 							}}
 						>
-							<Typography noWrap variant='subtitle1' component='p'>
+							<Typography noWrap component='p' variant='subtitle1'>
 								<b>{user.login}</b>
 							</Typography>
 							{userFavourites.includes(user) ? (
 								<FavoriteIcon
-									onClick={removeFromFavourites}
 									sx={{ color: pink[500] }}
+									onClick={removeFromFavourites}
 								/>
 							) : (
 								<FavoriteBorderIcon
-									onClick={addToFavourites}
 									sx={{ color: pink[500] }}
+									onClick={addToFavourites}
 								/>
 							)}
 						</Box>
 						<Box>
-							<Typography noWrap variant='caption' component='p'>
+							<Typography noWrap component='p' variant='caption'>
 								{followingCount} Following
 							</Typography>
-							<Typography noWrap variant='caption' component='p'>
+							<Typography noWrap component='p' variant='caption'>
 								{followersCount} followers
 							</Typography>
 						</Box>

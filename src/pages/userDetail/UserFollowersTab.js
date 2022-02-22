@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-import Grid from '@mui/material/Grid';
+import { Box, CircularProgress, Grid } from '@mui/material';
 
-import TabPanel from '../../components/elements/TabPanel';
-import UserCard from '../../components/UserCard';
-import UserCardGrid from '../../components/layout/UserCardGrid';
-import { Box, CircularProgress } from '@mui/material';
+import TabPanel from 'components/elements/TabPanel';
+import UserCardGrid from 'components/layout/UserCardGrid';
+import UserCard from 'components/UserCard';
 
-const UserFollowersTab = ({ value, followersUrl }) => {
+const UserFollowersTab = ({ followersUrl, value }) => {
 	const [loading, setLoading] = useState(false);
 	const [userFollowers, setUserFollowers] = useState([]);
 
@@ -25,7 +24,7 @@ const UserFollowersTab = ({ value, followersUrl }) => {
 	}, [followersUrl]);
 
 	return (
-		<TabPanel value={value} index={1}>
+		<TabPanel index={1} value={value}>
 			{loading ? (
 				<Box sx={{ display: 'flex', justifyContent: 'center' }}>
 					<CircularProgress color='success' />
@@ -33,7 +32,7 @@ const UserFollowersTab = ({ value, followersUrl }) => {
 			) : (
 				<UserCardGrid>
 					{userFollowers.map((user) => (
-						<Grid item xs={12} sm={6} key={user.id}>
+						<Grid item key={user.id} sm={6} xs={12}>
 							<UserCard user={user} />
 						</Grid>
 					))}
