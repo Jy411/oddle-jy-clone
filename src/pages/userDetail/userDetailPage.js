@@ -1,17 +1,23 @@
 import React, { useState } from 'react';
 
-import { Avatar, Box, Container, Paper, Typography } from '@mui/material';
-import LocationCityIcon from '@mui/icons-material/LocationCity';
-
 import { useLocation } from 'react-router-dom';
 
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
+import LocationCityIcon from '@mui/icons-material/LocationCity';
+import {
+	Avatar,
+	Box,
+	Container,
+	Paper,
+	Typography,
+	Tab,
+	Tabs,
+} from '@mui/material';
 
-import UserRepoTab from './UserRepoTab';
+import { UserDetailHeader } from 'components/Headers';
+
 import UserFollowersTab from './UserFollowersTab';
 import UserFollowingTab from './UserFollowingTab';
-import { UserDetailHeader } from '../../components/Headers';
+import UserRepoTab from './UserRepoTab';
 
 const UserAvatarDetail = ({ ...user }) => {
 	return (
@@ -32,10 +38,10 @@ const UserAvatarDetail = ({ ...user }) => {
 				src={user.avatar_url}
 				sx={{ height: 160, width: 160 }}
 			/>
-			<Typography variant='h4' sx={{ fontWeight: 'bold' }}>
+			<Typography sx={{ fontWeight: 'bold' }} variant='h4'>
 				{user.name}
 			</Typography>
-			<Typography variant='h5' sx={{ fontWeight: 'light' }}>
+			<Typography sx={{ fontWeight: 'light' }} variant='h5'>
 				{user.login}
 			</Typography>
 			<Box
@@ -43,11 +49,11 @@ const UserAvatarDetail = ({ ...user }) => {
 			>
 				<LocationCityIcon sx={{ opacity: 0.5 }} />
 				{user.location ? (
-					<Typography variant='subtitle1' sx={{ fontWeight: 'light' }}>
+					<Typography sx={{ fontWeight: 'light' }} variant='subtitle1'>
 						{user.location}
 					</Typography>
 				) : (
-					<Typography variant='subtitle1' sx={{ fontWeight: 'light' }}>
+					<Typography sx={{ fontWeight: 'light' }} variant='subtitle1'>
 						No Location
 					</Typography>
 				)}
@@ -59,15 +65,13 @@ const UserAvatarDetail = ({ ...user }) => {
 const UserDetailTabBar = ({ ...user }) => {
 	const [value, setValue] = useState(0);
 
-	console.log('user', user);
-
 	const TabOptions = () => (
 		<Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 2 }}>
 			<Tabs
-				variant='fullWidth'
-				value={value}
-				onChange={handleChange}
 				aria-label='basic tabs example'
+				value={value}
+				variant='fullWidth'
+				onChange={handleChange}
 			>
 				<Tab wrapped label={`Repositories (${user.public_repos})`} />
 				<Tab wrapped label={`Followers (${user.followers})`} />
@@ -88,11 +92,11 @@ const UserDetailTabBar = ({ ...user }) => {
 				elevation={0}
 				sx={{ display: 'flex', flexDirection: 'column', p: 3 }}
 			>
-				<UserRepoTab value={value} reposUrl={user.repos_url} />
+				<UserRepoTab reposUrl={user.repos_url} value={value} />
 
-				<UserFollowersTab value={value} followersUrl={user.followers_url} />
+				<UserFollowersTab followersUrl={user.followers_url} value={value} />
 
-				<UserFollowingTab value={value} followingUrl={user.following_url} />
+				<UserFollowingTab followingUrl={user.following_url} value={value} />
 			</Paper>
 		</Box>
 	);
@@ -103,11 +107,11 @@ const UserDetailPage = () => {
 
 	return (
 		<Container
+			disableGutters
+			square
 			component={Paper}
 			elevation={0}
 			maxWidth='md'
-			square
-			disableGutters
 			sx={{
 				display: 'flex',
 				flexDirection: 'column',

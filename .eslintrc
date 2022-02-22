@@ -1,0 +1,108 @@
+{
+	"env": {
+		"browser": true,
+		"es2021": true
+	},
+	"extends": [
+		"plugin:react/recommended",
+		"airbnb",
+		"plugin:eslint-comments/recommended",
+		"plugin:import/errors",
+		"plugin:import/warnings",
+		"plugin:prettier/recommended"
+	],
+	"parserOptions": {
+		"ecmaFeatures": {
+			"jsx": true
+		},
+		"ecmaVersion": 12,
+		"sourceType": "module",
+		"allowImportExportEverywhere": true
+	},
+	"plugins": [
+		"import",
+		"eslint-comments",
+		"react",
+		"jsx-a11y",
+		"react-hooks",
+		"sort-destructure-keys"
+	],
+	"rules": {
+		"eslint-comments/no-unlimited-disable": "off",
+		"prettier/prettier": "warn",
+		"no-use-before-define": "off",
+		"no-case-declarations": "off",
+		"no-underscore-dangle": "off",
+		"no-unused-vars": "warn",
+		"react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+		"no-param-reassign": "off",
+		"no-empty": "warn",
+		"import/no-extraneous-dependencies": "warn",
+		"import/no-unresolved": "off",
+		"import/order": [
+			"warn",
+			{
+				"groups": [
+					"builtin",
+					"external",
+					"type",
+					["parent", "sibling"],
+					"index"
+				],
+				"pathGroupsExcludedImportTypes": ["react"],
+				"pathGroups": [
+					{
+						"pattern": "react",
+						"group": "builtin",
+						"position": "before"
+					},
+					{
+						"pattern": "@mui/**",
+						"group": "external",
+						"position": "after"
+					},
+					{
+						"pattern": "components/**",
+						"group": "type"
+					},
+					{
+						"pattern": "redux/**",
+						"group": "type",
+						"position": "after"
+					}
+				],
+				"newlines-between": "always",
+				"alphabetize": { "order": "asc", "caseInsensitive": true }
+			}
+		],
+		"react/jsx-props-no-spreading": "off",
+		"react/jsx-sort-props": [
+			"warn",
+			{
+				"shorthandFirst": true,
+				"callbacksLast": true
+			}
+		],
+		"react/sort-prop-types": [
+			"warn",
+			{
+				"callbacksLast": true,
+				"requiredFirst": true,
+				"sortShapeProp": true
+			}
+		],
+		"react/jsx-sort-default-props": "warn",
+		"sort-destructure-keys/sort-destructure-keys": "warn",
+		"react/no-unescaped-entities": ["error", { "forbid": [">", "}"] }],
+		"jsx-a11y/label-has-associated-control": [
+			"warn",
+			{
+				"depth": 3
+			}
+		],
+		"react-hooks/exhaustive-deps": "error",
+		"react-hooks/rules-of-hooks": "error",
+		"react/prop-types": "warn",
+		"camelcase": "off"
+	}
+}
