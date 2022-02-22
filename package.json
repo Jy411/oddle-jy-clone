@@ -47,5 +47,20 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "devDependencies": {
+    "eslint-config-prettier": "^8.4.0",
+    "eslint-config-xo-react": "^0.26.0",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "prettier": "^2.5.1",
+    "xo": "^0.48.0"
+  },
+  "xo": {
+    "extends": "xo-react"
+  },
+  "main": "index.js",
+  "repository": "git@github.com:/Jy411/oddle-jinyung.git",
+  "author": "jy411 <jinyungisnot@gmail.com>",
+  "license": "MIT"
 }

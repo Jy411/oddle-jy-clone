@@ -1,89 +1,89 @@
-import React, { useEffect, useState, useMemo, createContext } from "react";
-import { Outlet, Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { createTokenAuth } from "@octokit/auth-token";
+import React, { useEffect, useState, useMemo, createContext } from 'react';
+import { Outlet, Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { createTokenAuth } from '@octokit/auth-token';
 
 import {
-  BottomNavigation,
-  BottomNavigationAction,
-  Container,
-  Paper,
-} from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+	BottomNavigation,
+	BottomNavigationAction,
+	Container,
+	Paper,
+} from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
-import { setAuth } from "./redux/auth";
+import { setAuth } from './redux/auth';
 
 const TabNavigation = () => {
-  const [value, setValue] = useState(0);
-  return (
-    <Paper
-      sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
-      elevation={20}
-    >
-      <BottomNavigation
-        showLabels
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-      >
-        <BottomNavigationAction
-          label="Search"
-          icon={<SearchIcon />}
-          component={Link}
-          to="/search"
-        />
-        <BottomNavigationAction
-          label="Favourites"
-          icon={<FavoriteIcon />}
-          component={Link}
-          to="/favourites"
-        />
-      </BottomNavigation>
-    </Paper>
-  );
+	const [value, setValue] = useState(0);
+	return (
+		<Paper
+			sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
+			elevation={20}
+		>
+			<BottomNavigation
+				showLabels
+				value={value}
+				onChange={(event, newValue) => {
+					setValue(newValue);
+				}}
+			>
+				<BottomNavigationAction
+					label='Search'
+					icon={<SearchIcon />}
+					component={Link}
+					to='/search'
+				/>
+				<BottomNavigationAction
+					label='Favourites'
+					icon={<FavoriteIcon />}
+					component={Link}
+					to='/favourites'
+				/>
+			</BottomNavigation>
+		</Paper>
+	);
 };
 
 const App = () => {
-  const [token, setToken] = useState(0);
-  const dispatch = useDispatch();
+	const [token, setToken] = useState(0);
+	const dispatch = useDispatch();
 
-  useEffect(() => {
-    const fetchAuth = async () => {
-      const auth = createTokenAuth("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");
-      return await auth();
-    };
-    fetchAuth().then((token) => {
-      setToken(token);
-      localStorage.setItem("token", token.token);
-    });
-  }, []);
+	useEffect(() => {
+		const fetchAuth = async () => {
+			const auth = createTokenAuth('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');
+			return await auth();
+		};
+		fetchAuth().then((token) => {
+			setToken(token);
+			localStorage.setItem('token', token.token);
+		});
+	}, []);
 
-  useEffect(() => {
-    if (token) {
-      dispatch(setAuth(token));
-    }
-  }, [dispatch, token]);
+	useEffect(() => {
+		if (token) {
+			dispatch(setAuth(token));
+		}
+	}, [dispatch, token]);
 
-  return (
-    <Container
-      component={Paper}
-      elevation={1}
-      disableGutters
-      maxWidth="md"
-      square
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        height: "calc(100vh - 56px)", // 56px = bottom nav height
-        // p: 0,
-      }}
-    >
-      <TabNavigation />
-      <Outlet />
-    </Container>
-  );
+	return (
+		<Container
+			component={Paper}
+			elevation={1}
+			disableGutters
+			maxWidth='md'
+			square
+			sx={{
+				display: 'flex',
+				flexDirection: 'column',
+				height: 'calc(100vh - 56px)', // 56px = bottom nav height
+				// p: 0,
+			}}
+		>
+			<TabNavigation />
+			<Outlet />
+		</Container>
+	);
 };
 
 export default App;
