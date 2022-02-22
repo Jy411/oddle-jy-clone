@@ -1,20 +1,66 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import Grid from "@mui/material/Grid";
-import { Box, CircularProgress, Typography } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  Paper,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import _ from "lodash";
 
-import SearchHeader from "../components/SearchHeader";
 import CenterBox from "../components/layout/CenterBox";
 import UserCard from "../components/UserCard";
 import UserCardGrid from "../components/layout/UserCardGrid";
 import SearchPagePagination from "../components/SearchPagePagination";
 
 import GitHubLogo from "../images/GitHubMark120.png";
+import GitHubLightLogo from "../images/GitHubMarkLight120.png";
 import GitHubLogoText from "../images/GitHubLogoText.png";
+import GitHubLogoTextWhite from "../images/GitHubLogoTextWhite.png";
 
 import request from "../api/request";
+import { SearchHeader, UserDetailHeader } from "../components/Headers";
+
+const SearchPageIntro = () => {
+  const theme = useTheme();
+
+  const { mode } = theme.palette;
+
+  return (
+    <CenterBox>
+      <Box
+        component="img"
+        alt="github logo"
+        src={mode === "dark" ? GitHubLightLogo : GitHubLogo}
+        sx={{
+          width: 120,
+        }}
+      />
+      <Box
+        component="img"
+        alt="github text"
+        src={mode === "dark" ? GitHubLogoTextWhite : GitHubLogoText}
+        sx={{
+          width: 139,
+        }}
+      />
+      <Typography
+        variant="subtitle2"
+        sx={{
+          textAlign: "center",
+          maxWidth: 285,
+        }}
+      >
+        Enter GitHub username and search users matching the input like Google
+        Search, click avatars to view more details, including repositories,
+        followers and following.
+      </Typography>
+    </CenterBox>
+  );
+};
 
 const SearchPage = () => {
   const [page, setPage] = useState(1);
@@ -64,45 +110,10 @@ const SearchPage = () => {
   }, [searchQuery, page]);
 
   const { items, total_count } = queryResponse?.data || {};
-  // console.log("queryResponse", queryResponse);
-  // console.log("items", items);
-  // console.log("total_count", total_count);
 
   return (
     <>
       <SearchHeader onChange={onSearchChange} />
-
-      {!queryResponse && !loading && (
-        <CenterBox>
-          <Box
-            component="img"
-            alt="github logo"
-            src={GitHubLogo}
-            sx={{
-              width: 120,
-            }}
-          />
-          <Box
-            component="img"
-            alt="github text"
-            src={GitHubLogoText}
-            sx={{
-              width: 139,
-            }}
-          />
-          <Typography
-            variant="subtitle2"
-            sx={{
-              textAlign: "center",
-              maxWidth: 285,
-            }}
-          >
-            Enter GitHub username and search users matching the input like
-            Google Search, click avatars to view more details, including
-            repositories, followers and following.
-          </Typography>
-        </CenterBox>
-      )}
 
       {loading && (
         <CenterBox>
@@ -110,8 +121,13 @@ const SearchPage = () => {
         </CenterBox>
       )}
 
+      {!queryResponse && !loading && <SearchPageIntro />}
+
       {queryResponse && total_count !== 0 && !loading && (
-        <>
+        <Paper
+          elevation={0}
+          sx={{ display: "flex", flexDirection: "column", px: 3, py: 2 }}
+        >
           <Typography variant="subtitle1" sx={{ my: 1 }}>
             {total_count} GitHub Users found
           </Typography>
@@ -127,7 +143,7 @@ const SearchPage = () => {
             currentPage={page}
             onChange={onPageChange}
           />
-        </>
+        </Paper>
       )}
 
       {total_count === 0 && !loading && (

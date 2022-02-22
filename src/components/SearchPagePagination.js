@@ -9,7 +9,7 @@ const SearchPagePagination = ({ currentPage, onChange }) => {
       variant="outlined"
       shape="rounded"
       onChange={onChange}
-      sx={{ alignSelf: "center" }}
+      sx={{ alignSelf: "center", py: 2 }}
     />
   );
 };

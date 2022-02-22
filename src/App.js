@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo, createContext } from "react";
 import { Outlet, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { createTokenAuth } from "@octokit/auth-token";
@@ -19,7 +19,7 @@ const TabNavigation = () => {
   return (
     <Paper
       sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
-      elevation={3}
+      elevation={20}
     >
       <BottomNavigation
         showLabels
@@ -68,12 +68,16 @@ const App = () => {
 
   return (
     <Container
-      maxWidth="sm"
+      component={Paper}
+      elevation={1}
+      disableGutters
+      maxWidth="md"
+      square
       sx={{
         display: "flex",
         flexDirection: "column",
-        height: "calc(100vh - 70px)",
-        p: 0,
+        height: "calc(100vh - 56px)", // 56px = bottom nav height
+        // p: 0,
       }}
     >
       <TabNavigation />
