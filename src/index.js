@@ -2,7 +2,7 @@ import React, { createContext, useMemo, useState } from 'react';
 
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -48,7 +48,7 @@ const Root = () => {
 			<ThemeProvider theme={theme}>
 				<Provider store={reduxSetup().store}>
 					<PersistGate loading={null} persistor={reduxSetup().persistor}>
-						<BrowserRouter>
+						<HashRouter>
 							<Routes>
 								{/* Initial Route to render */}
 								<Route element={<App />} path='/'>
@@ -57,7 +57,7 @@ const Root = () => {
 								</Route>
 								<Route element={<UserDetailPage />} path='detail' />
 							</Routes>
-						</BrowserRouter>
+						</HashRouter>
 					</PersistGate>
 				</Provider>
 			</ThemeProvider>
