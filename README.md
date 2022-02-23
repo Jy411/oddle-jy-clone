@@ -20,16 +20,12 @@ Perform the following steps to get started:
         - redux
         - App.js
         - index.js
-    - public
-    - .eslintignore
     - .eslintrc
-    - .gitignore
-    - .prettierignore
     - .prettierrc
     - jsconfig.json
     - package.json
     - README.md
-    - yarn.lock
+
 
 `Pages`: Contains all the pages of the application.
 
