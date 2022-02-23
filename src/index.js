@@ -3,10 +3,11 @@ import React, { createContext, useMemo, useState } from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
-import store from 'redux/store';
+import reduxSetup from 'redux/store';
 
 import Favourites from 'pages/favouritesPage';
 import SearchPage from 'pages/searchPage';
@@ -45,17 +46,19 @@ const Root = () => {
 	return (
 		<ColorModeContext.Provider value={colorMode}>
 			<ThemeProvider theme={theme}>
-				<Provider store={store}>
-					<BrowserRouter>
-						<Routes>
-							{/* Initial Route to render */}
-							<Route element={<App />} path='/'>
-								<Route element={<SearchPage />} path='/' />
-								<Route element={<Favourites />} path='favourites' />
-							</Route>
-							<Route element={<UserDetailPage />} path='detail' />
-						</Routes>
-					</BrowserRouter>
+				<Provider store={reduxSetup().store}>
+					<PersistGate loading={null} persistor={reduxSetup().persistor}>
+						<BrowserRouter>
+							<Routes>
+								{/* Initial Route to render */}
+								<Route element={<App />} path='/'>
+									<Route element={<SearchPage />} path='/' />
+									<Route element={<Favourites />} path='favourites' />
+								</Route>
+								<Route element={<UserDetailPage />} path='detail' />
+							</Routes>
+						</BrowserRouter>
+					</PersistGate>
 				</Provider>
 			</ThemeProvider>
 		</ColorModeContext.Provider>
