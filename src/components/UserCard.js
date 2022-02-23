@@ -17,7 +17,7 @@ import request from 'api/request';
 
 import StyledCard from './elements/StyledCard';
 
-const UserCard = ({ user }) => {
+const UserCard = ({ showAddSnackbar, showRemoveSnackbar, user }) => {
 	const [followingCount, setFollowingCount] = useState(0);
 	const [followersCount, setFollowersCount] = useState(0);
 	const [userDetail, setUserDetail] = useState({});
@@ -49,10 +49,12 @@ const UserCard = ({ user }) => {
 
 	const addToFavourites = () => {
 		dispatch(addUserToFavourites(user));
+		showAddSnackbar();
 	};
 
 	const removeFromFavourites = () => {
 		dispatch(removeUserFromFavourites(user));
+		showRemoveSnackbar();
 	};
 
 	return (

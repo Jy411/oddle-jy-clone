@@ -12,9 +12,11 @@ import {
 	useTheme,
 } from '@mui/material';
 
+import AddToFavSnackbar from 'components/AddToFavSnackbar';
 import { SearchHeader } from 'components/Headers';
 import CenterBox from 'components/layout/CenterBox';
 import UserCardGrid from 'components/layout/UserCardGrid';
+import RemoveFromFavSnackbar from 'components/RemoveFromFavSnackbar';
 import SearchPagePagination from 'components/SearchPagePagination';
 import UserCard from 'components/UserCard';
 
@@ -68,6 +70,8 @@ const SearchPage = () => {
 	const [searchQuery, setSearchQuery] = useState('');
 	const [queryResponse, setQueryResponse] = useState(null);
 	const [loading, setLoading] = useState(false);
+	const [addToFavSnackbar, setAddToFavSnackbar] = useState(false);
+	const [removeFromFavSnackbar, setRemoveFromFavSnackbar] = useState(false);
 
 	const onSearchChange = (e) => {
 		setSearchQuery(e.target.value);
@@ -136,7 +140,11 @@ const SearchPage = () => {
 					<UserCardGrid>
 						{items.map((user) => (
 							<Grid item key={user.id} sm={6} xs={12}>
-								<UserCard user={user} />
+								<UserCard
+									showAddSnackbar={() => setAddToFavSnackbar(true)}
+									showRemoveSnackbar={() => setRemoveFromFavSnackbar(true)}
+									user={user}
+								/>
 							</Grid>
 						))}
 					</UserCardGrid>
@@ -156,6 +164,16 @@ const SearchPage = () => {
 					</Typography>
 				</CenterBox>
 			)}
+
+			<AddToFavSnackbar
+				addToFavSnackbar={addToFavSnackbar}
+				setAddToFavSnackbar={setAddToFavSnackbar}
+			/>
+
+			<RemoveFromFavSnackbar
+				removeFromFavSnackbar={removeFromFavSnackbar}
+				setRemoveFromFavSnackbar={setRemoveFromFavSnackbar}
+			/>
 		</>
 	);
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useSelector } from 'react-redux';
 
@@ -10,8 +10,11 @@ import CenterBox from 'components/layout/CenterBox';
 import UserCardGrid from 'components/layout/UserCardGrid';
 import UserCard from 'components/UserCard';
 
+import RemoveFromFavSnackbar from '../components/RemoveFromFavSnackbar';
+
 const FavouritesPage = () => {
 	const { userFavourites } = useSelector((state) => state.userFavourites);
+	const [removeFromFavSnackbar, setRemoveFromFavSnackbar] = useState(false);
 
 	return (
 		<>
@@ -47,13 +50,21 @@ const FavouritesPage = () => {
 						{userFavourites.map((user) => {
 							return (
 								<Grid item key={user.id} sm={6} xs={12}>
-									<UserCard user={user} />
+									<UserCard
+										showRemoveSnackbar={() => setRemoveFromFavSnackbar(true)}
+										user={user}
+									/>
 								</Grid>
 							);
 						})}
 					</UserCardGrid>
 				</Paper>
 			)}
+
+			<RemoveFromFavSnackbar
+				removeFromFavSnackbar={removeFromFavSnackbar}
+				setRemoveFromFavSnackbar={setRemoveFromFavSnackbar}
+			/>
 		</>
 	);
 };
