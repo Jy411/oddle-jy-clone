@@ -128,9 +128,9 @@ const SearchPage = () => {
 			{queryResponse && total_count !== 0 && !loading && (
 				<Paper
 					elevation={0}
-					sx={{ display: 'flex', flexDirection: 'column', px: 3, py: 2 }}
+					sx={{ display: 'flex', flexDirection: 'column', px: 3, py: 1 }}
 				>
-					<Typography sx={{ my: 1 }} variant='subtitle1'>
+					<Typography sx={{ my: 0 }} variant='subtitle1'>
 						{total_count} GitHub Users found
 					</Typography>
 					<UserCardGrid>

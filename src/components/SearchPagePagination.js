@@ -9,7 +9,7 @@ const SearchPagePagination = ({ currentPage, onChange }) => {
 			count={80}
 			page={currentPage}
 			shape='rounded'
-			sx={{ alignSelf: 'center', py: 2 }}
+			sx={{ alignSelf: 'center', py: 2, mb: 8 }}
 			variant='outlined'
 			onChange={onChange}
 		/>

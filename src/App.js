@@ -19,7 +19,7 @@ const TabNavigation = () => {
 	const [value, setValue] = useState(0);
 	return (
 		<Paper
-			elevation={20}
+			elevation={24}
 			sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
 		>
 			<BottomNavigation
@@ -33,7 +33,7 @@ const TabNavigation = () => {
 					component={Link}
 					icon={<SearchIcon />}
 					label='Search'
-					to='/search'
+					to='/'
 				/>
 				<BottomNavigationAction
 					component={Link}

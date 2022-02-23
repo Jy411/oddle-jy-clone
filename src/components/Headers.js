@@ -12,11 +12,12 @@ const HeaderWrapper = ({ children }) => {
 		<Box
 			square
 			component={Paper}
-			elevation={2}
+			elevation={20}
 			sx={{
 				display: 'flex',
 				flexDirection: 'column',
-				p: 2,
+				px: 2,
+				pb: 1,
 			}}
 		>
 			{children}

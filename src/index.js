@@ -50,7 +50,7 @@ const Root = () => {
 						<Routes>
 							{/* Initial Route to render */}
 							<Route element={<App />} path='/'>
-								<Route element={<SearchPage />} path='search' />
+								<Route element={<SearchPage />} path='/' />
 								<Route element={<Favourites />} path='favourites' />
 							</Route>
 							<Route element={<UserDetailPage />} path='detail' />
