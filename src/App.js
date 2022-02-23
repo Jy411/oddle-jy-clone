@@ -52,7 +52,7 @@ const App = () => {
 
 	useEffect(() => {
 		const fetchAuth = async () => {
-			const auth = createTokenAuth('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');
+			const auth = createTokenAuth(process.env.REACT_APP_GITHUB_ACCESS_TOKEN);
 			return auth();
 		};
 		// eslint-disable-next-line no-shadow

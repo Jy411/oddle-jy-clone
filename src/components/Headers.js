@@ -31,7 +31,7 @@ const UserDetailHeader = () => {
 	return (
 		<HeaderWrapper>
 			<Header
-				icon={<HomeIcon fontSize='large' onClick={() => navigate('/search')} />}
+				icon={<HomeIcon fontSize='large' onClick={() => navigate('/')} />}
 			/>
 		</HeaderWrapper>
 	);
