@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { Box, Typography, CardMedia, LinearProgress } from '@mui/material';
+import { Box, Typography, CardMedia, Skeleton, Avatar } from '@mui/material';
 import { pink } from '@mui/material/colors';
 
 import {
@@ -58,54 +58,50 @@ const UserCard = ({ user }) => {
 	return (
 		<StyledCard>
 			{loading ? (
-				<Box sx={{ width: '100%' }}>
-					<LinearProgress
-						color='secondary'
-						sx={{ height: 15, borderRadius: 5 }}
-					/>
-				</Box>
+				<Skeleton height={64} variant='circular' width={64}>
+					<Avatar />
+				</Skeleton>
 			) : (
-				<>
-					<CardMedia
-						component='img'
+				<CardMedia>
+					<Avatar
 						src={user.avatar_url}
 						sx={{ width: 64, height: 64 }}
 						onClick={() => navigate('/detail', { state: { userDetail } })}
 					/>
-					<Box sx={{ display: 'flex', flex: 1, flexDirection: 'column', p: 2 }}>
-						<Box
-							sx={{
-								display: 'flex',
-								justifyContent: 'space-between',
-								alignItems: 'center',
-							}}
-						>
-							<Typography noWrap component='p' variant='subtitle1'>
-								<b>{user.login}</b>
-							</Typography>
-							{userFavourites.includes(user) ? (
-								<FavoriteIcon
-									sx={{ color: pink[500] }}
-									onClick={removeFromFavourites}
-								/>
-							) : (
-								<FavoriteBorderIcon
-									sx={{ color: pink[500] }}
-									onClick={addToFavourites}
-								/>
-							)}
-						</Box>
-						<Box>
-							<Typography noWrap component='p' variant='caption'>
-								{followingCount} Following
-							</Typography>
-							<Typography noWrap component='p' variant='caption'>
-								{followersCount} followers
-							</Typography>
-						</Box>
-					</Box>
-				</>
+				</CardMedia>
 			)}
+			<Box sx={{ display: 'flex', flex: 1, flexDirection: 'column', p: 2 }}>
+				<Box
+					sx={{
+						display: 'flex',
+						justifyContent: 'space-between',
+						alignItems: 'center',
+					}}
+				>
+					<Typography noWrap>
+						<b>{loading ? <Skeleton width={30} /> : user.login}</b>
+					</Typography>
+					{userFavourites.includes(user) ? (
+						<FavoriteIcon
+							sx={{ color: pink[500] }}
+							onClick={removeFromFavourites}
+						/>
+					) : (
+						<FavoriteBorderIcon
+							sx={{ color: pink[500] }}
+							onClick={addToFavourites}
+						/>
+					)}
+				</Box>
+				<Box>
+					<Typography noWrap component='p' variant='caption'>
+						{loading ? <Skeleton /> : `${followingCount} Following`}
+					</Typography>
+					<Typography noWrap component='p' variant='caption'>
+						{loading ? <Skeleton /> : `${followersCount} Following`}
+					</Typography>
+				</Box>
+			</Box>
 		</StyledCard>
 	);
 };
