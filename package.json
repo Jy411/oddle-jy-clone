@@ -1,7 +1,7 @@
 {
   "name": "oddle-jinyung",
   "version": "0.1.0",
-  "homepage": "https://github.com/Jy411/oddle-jinyung",
+  "homepage": "https://github.com/Jy411/oddle-jinyung/",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.8.1",
