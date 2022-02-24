@@ -88,19 +88,22 @@ const SearchPage = () => {
 				setLoading(true);
 
 				const fetchingData = async () => {
-					return request('GET /search/users', {
-						q: searchQuery,
-						page,
-					})
-						.then((res) => {
-							setQueryResponse(res);
-							setLoading(false);
+					return (
+						request('GET /search/users', {
+							q: searchQuery,
+							page,
 						})
-						.catch((err) => {
-							// TODO Error Handling
-							// console.log(err);
-							setLoading(false);
-						});
+							.then((res) => {
+								setQueryResponse(res);
+								setLoading(false);
+							})
+							// eslint-disable-next-line no-unused-vars
+							.catch((err) => {
+								// TODO Error Handling
+								// console.log(err);
+								setLoading(false);
+							})
+					);
 				};
 
 				fetchingData();
