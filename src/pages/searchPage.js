@@ -98,7 +98,7 @@ const SearchPage = () => {
 						})
 						.catch((err) => {
 							// TODO Error Handling
-							console.log(err);
+							// console.log(err);
 							setLoading(false);
 						});
 				};
