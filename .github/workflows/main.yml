@@ -17,6 +17,10 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Install Packages
       run: npm install
+    - name: Hello world action
+      env: # Or as an environment variable
+        REACT_APP_GITHUB_ACCESS_TOKEN: ${{ secrets.REACT_APP_GITHUB_ACCESS_TOKEN }}
+
     - name: Build page
       run: npm run build
     - name: Deploy to gh-pages
